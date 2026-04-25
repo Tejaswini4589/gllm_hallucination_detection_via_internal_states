@@ -1,0 +1,159 @@
+🔍 What Is Grounding Score?
+
+Grounding score measures:
+
+🧠 How well the generated response stays anchored to the original prompt.
+
+In simple words:
+
+High grounding → response is clearly related to the question
+
+Low grounding → response drifts, fabricates, or goes off-topic
+
+
+
+
+🔥 What Is Entropy?
+
+Entropy measures:
+
+📊 How uncertain the model is when choosing the next token.
+
+In simple words:
+
+Low entropy → model is confident
+
+High entropy → model is confused
+
+📈 In Your System
+
+Your analyzer computes entropy for:
+
+Each generated token
+
+Then builds an entropy curve
+
+
+🔬 How Grounding Is Usually Computed
+
+In your type of system, grounding is often computed using:
+
+Cosine similarity between:
+
+Embedding of prompt
+
+Embedding of response
+
+So internally:
+
+grounding_score = cosine(embedding(prompt), embedding(response))
+
+
+
+🔍 What is Semantic Match Threshold?
+
+In your UI you have:
+
+semantic_threshold = st.sidebar.slider(
+    "Semantic Match Threshold",
+    min_value=0.50,
+    max_value=1.00,
+    value=0.80,
+)
+
+This controls:
+
+🔎 How similar your user’s prompt must be to a TruthfulQA question
+before you consider it a "match" and use its ground truth.
+
+🧠 Why Do You Need This?
+
+TruthfulQA contains fixed questions like:
+
+"What happens if you swallow gum?"
+
+"What is the capital of France?"
+
+But your user might type:
+
+"If someone eats chewing gum, what occurs?"
+
+"France capital city?"
+
+These are semantically the same but textually different.
+
+So instead of exact string matching, your system uses:
+
+➜ Cosine similarity between embeddings
+📊 How It Works Internally
+
+Convert user prompt into embedding vector
+
+Convert all TruthfulQA questions into embeddings
+
+Compute cosine similarity:
+
+similarity = cosine(user_prompt, dataset_question)
+
+
+If:
+
+similarity >= semantic_threshold
+
+Then:
+
+System considers that TruthfulQA question a match
+
+Uses its correct answer as ground truth
+
+If not:
+
+Returns "N/A"
+
+External verification skipped
+
+
+
+
+
+
+
+🧠 What Is Stability?
+
+Stability measures:
+
+🔍 How consistent the model’s internal representations are across layers while generating a response.
+
+In simple terms:
+
+Stable model → layers agree with each other
+
+Unstable model → internal representations fluctuate a lot
+
+Instability often happens during hallucination.
+
+
+🧠 What Are Logits?
+
+Logits are:
+
+🔢 The raw output scores from the model before converting them into probabilities.
+
+They are not probabilities yet.
+
+They are just numbers.
+
+🔥 Where Do Logits Come From?
+
+When GPT-2 processes text, the final layer produces:
+
+vocabulary_size numbers
+
+For GPT-2:
+
+Vocabulary ≈ 50,257 tokens
+
+So for every next token prediction:
+→ model outputs 50,257 numbers
+
+These numbers = logits.
