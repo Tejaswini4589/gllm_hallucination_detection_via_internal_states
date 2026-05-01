@@ -196,7 +196,10 @@ MODEL_LABELS = {
     "EleutherAI/gpt-neo-1.3B": "GPT-Neo 1.3B",
     "EleutherAI/gpt-neo-2.7B": "GPT-Neo 2.7B",
     "EleutherAI/pythia-2.8b": "Pythia 2.8B",
+<<<<<<< HEAD
     "facebook/opt-6.7b": "OPT 6.7B (High VRAM/RAM)",
+=======
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
 }
 
 model_name = st.sidebar.selectbox(

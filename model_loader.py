@@ -1,6 +1,11 @@
 """
+<<<<<<< HEAD
 Model Loader Module.
 Loads supported TransformerLens causal language models and provides text generation functionality.
+=======
+Model Loader Module
+Loads GPT-2 and GPT-Neo models using TransformerLens and provides text generation functionality.
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
 """
 
 import torch
@@ -11,10 +16,16 @@ import numpy as np
 
 class GPT2ModelLoader:
     """
+<<<<<<< HEAD
     Handles loading and text generation with supported TransformerLens models.
     Supports: gpt2, gpt2-medium, gpt2-large, gpt2-xl,
               EleutherAI/gpt-neo-125M, EleutherAI/gpt-neo-1.3B, EleutherAI/gpt-neo-2.7B,
               EleutherAI/pythia-2.8b, facebook/opt-6.7b
+=======
+    Handles loading and text generation with GPT-2 and GPT-Neo models using TransformerLens.
+    Supports: gpt2, gpt2-medium, gpt2-large, gpt2-xl,
+              EleutherAI/gpt-neo-125M, EleutherAI/gpt-neo-1.3B, EleutherAI/gpt-neo-2.7B
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
     """
     
     def __init__(self, model_name: str = "gpt2"):
@@ -22,7 +33,11 @@ class GPT2ModelLoader:
         Initialize the model.
         
         Args:
+<<<<<<< HEAD
             model_name: Name of the supported model variant to load
+=======
+            model_name: Name of the GPT-2 or GPT-Neo model variant to load
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
         """
         print(f"Loading {model_name} model...")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
