@@ -19,7 +19,11 @@ Feature Clipping follows the INSIDE paper exactly:
   - Every hidden-state tensor is clipped element-wise per feature dimension j
     *before* the sentence embedding is extracted.
 """
+<<<<<<< HEAD
 #hiiiiis
+=======
+
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -309,12 +313,15 @@ class InternalMetrics:
 
             # Last-token embedding (INSIDE paper §3.2)
             z_i = hidden_clipped[-1, :]                           # (d_model,)
+<<<<<<< HEAD
 
             # L2-normalise onto the unit sphere so that eigenvalues measure
             # *angular* (directional) dispersion rather than magnitude.
             # Without this, GPT-2 hidden norms (~35-50) inflate eigenvalues
             # by ~1000×, pushing the eigen score to large positive numbers.
             z_i = F.normalize(z_i, p=2, dim=0)                   # unit vector
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
             embeddings.append(z_i)
 
         # ------------------------------------------------------------------
@@ -326,8 +333,11 @@ class InternalMetrics:
         Z_centered = Z - Z_mean                                   # (K, d_model)
 
         # (K × K) covariance with Tikhonov regularisation
+<<<<<<< HEAD
         # With unit-norm embeddings, Sigma entries are bounded in [-1, 1]
         # and eigenvalues lie in [0, K], giving log(λ) a sensible range.
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         Sigma = Z_centered @ Z_centered.T                         # (K, K)
         Sigma = Sigma + alpha * torch.eye(K, device=Sigma.device, dtype=Sigma.dtype)
 
@@ -475,6 +485,7 @@ class InternalMetrics:
         import math
 
         raw = eigen_metrics["eigen_score"]
+<<<<<<< HEAD
         # Map raw eigen score to [0, 1] risk.
         # With L2-normalised embeddings the raw score typically falls in
         # [-2, +2].  A simple sigmoid centred at 0 with scale=1 works well:
@@ -482,6 +493,11 @@ class InternalMetrics:
         #   score ~  0  → moderate spread → mid risk  (→ 0.5)
         #   score >> 0  → high dispersion → high risk (→ 1)
         normalized_eigen = float(1.0 / (1.0 + math.exp(-raw)))
+=======
+        # Map raw eigen score to [0, 1] risk via sigmoid-like mapping.
+        # Higher (less negative) raw score → higher uncertainty → higher risk.
+        normalized_eigen = float(1.0 / (1.0 + math.exp(-raw / max(1.0, abs(raw) + 1e-9))))
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 
         stability = stability_metrics["stability_score"]
         grounding = grounding_metrics["grounding_score"]

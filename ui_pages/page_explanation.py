@@ -185,7 +185,15 @@ def render():
             "Factual Similarity",
             ext_sim,
             "linear-gradient(90deg,#059669,#34d399)",
+<<<<<<< HEAD
             "Higher means the answer better matched the reference ground truth (TruthfulQA, CoQA, SQuAD, NQ, TriviaQA).",
+=======
+<<<<<<< HEAD
+            "Higher means the answer better matched the reference ground truth (TruthfulQA, CoQA, SQuAD, NQ, TriviaQA).",
+=======
+            "Higher means the answer better matched TruthfulQA or Wikipedia.",
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         )
 
     st.markdown(

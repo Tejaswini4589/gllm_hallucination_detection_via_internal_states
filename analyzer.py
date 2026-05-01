@@ -11,19 +11,42 @@ from external_verifier import ExternalVerifier
 import matplotlib.pyplot as plt
 import numpy as np
 
+<<<<<<< HEAD
 # All supported TransformerLens models used by the app.
+=======
+<<<<<<< HEAD
+# All supported TransformerLens models used by the app.
+=======
+# All supported TransformerLens models (GPT-2 and GPT-Neo families)
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 SUPPORTED_MODELS = {
     "gpt2", "gpt2-medium", "gpt2-large", "gpt2-xl",
     "EleutherAI/gpt-neo-125M", "EleutherAI/gpt-neo-1.3B", "EleutherAI/gpt-neo-2.7B",
     "EleutherAI/pythia-2.8b",
+<<<<<<< HEAD
     "facebook/opt-6.7b",
+=======
+<<<<<<< HEAD
+    "facebook/opt-6.7b",
+=======
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 }
 
 
 class HallucinationAnalyzer:
     """
     Main analyzer that combines all metrics for hallucination detection.
+<<<<<<< HEAD
     Supports GPT-2, GPT-Neo, Pythia, and OPT variants via TransformerLens.
+=======
+<<<<<<< HEAD
+    Supports GPT-2, GPT-Neo, Pythia, and OPT variants via TransformerLens.
+=======
+    Supports GPT-2 and GPT-Neo variants via TransformerLens.
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
     """
 
     def __init__(
@@ -35,17 +58,35 @@ class HallucinationAnalyzer:
         Initialize the analyzer with all components.
 
         Args:
+<<<<<<< HEAD
             model_name: Model name for a supported TransformerLens model
+=======
+<<<<<<< HEAD
+            model_name: Model name for a supported TransformerLens model
+=======
+            model_name: Model name - GPT-2 or GPT-Neo variant
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
             semantic_threshold: Minimum cosine similarity for TruthfulQA question
                                 matching (0-1). Lower values allow fuzzier matches.
         """
         self.model_name = model_name
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         if model_name not in SUPPORTED_MODELS:
             supported = ", ".join(sorted(SUPPORTED_MODELS))
             raise ValueError(f"Unsupported model '{model_name}'. Supported models: {supported}")
 
         # TransformerLens model path
+<<<<<<< HEAD
+=======
+=======
+        # GPT-2 / GPT-Neo / TransformerLens path
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         self.model_loader = GPT2ModelLoader(model_name)
         self.internal_metrics = InternalMetrics(self.model_loader.get_model())
 

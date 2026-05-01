@@ -254,7 +254,15 @@ def render(cfg: dict):
             unsafe_allow_html=True,
         )
     else:
+<<<<<<< HEAD
         st.info("No ground truth was found across datasets (TruthfulQA, CoQA, SQuAD, NQ, TriviaQA) for this prompt. External similarity was set to a neutral fallback.")
+=======
+<<<<<<< HEAD
+        st.info("No ground truth was found across datasets (TruthfulQA, CoQA, SQuAD, NQ, TriviaQA) for this prompt. External similarity was set to a neutral fallback.")
+=======
+        st.info("No TruthfulQA or Wikipedia ground truth was found for this prompt. External similarity was set to a neutral fallback.")
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 
     st.subheader("Eigenvalue Spectrum")
     st.plotly_chart(
@@ -275,7 +283,15 @@ def _show_example():
         <p style='color:rgba(0,0,0,0.6); max-width:520px; margin:0 auto;'>
             Type a question above and click <strong>Run Analysis</strong>.<br/>
             The system will generate multiple responses, compute internal metrics
+<<<<<<< HEAD
             (EigenScore, Stability, Grounding), and cross-check with reference datasets.
+=======
+<<<<<<< HEAD
+            (EigenScore, Stability, Grounding), and cross-check with reference datasets.
+=======
+            (EigenScore, Stability, Grounding), and cross-check with TruthfulQA or Wikipedia.
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         </p>
     </div>""",
         unsafe_allow_html=True,

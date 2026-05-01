@@ -1,6 +1,7 @@
 """
 Page 3 - Evaluation Page.
 ROC curve, confusion matrix, accuracy, precision, recall, and F1.
+<<<<<<< HEAD
 
 The model is run for every sampled question so that the `final_risk` score
 produced by the full hallucination-detection pipeline is used as the classifier
@@ -9,11 +10,16 @@ score for the ROC curve.  The true label is determined by comparing the model's
 
     similarity >= label_threshold  →  label = 0  (model was correct)
     similarity <  label_threshold  →  label = 1  (model hallucinated)
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 """
 
 import ast
 
+<<<<<<< HEAD
 import numpy as np
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -117,6 +123,7 @@ def plot_confusion(y_true, y_pred):
     return fig
 
 
+<<<<<<< HEAD
 def plot_risk_distribution(details: list) -> go.Figure:
     """Box / strip plot showing risk score distribution per true label."""
     label_key = "True Label (label=0 → Correct, 1 → Hallucinated)"
@@ -143,6 +150,8 @@ def plot_risk_distribution(details: list) -> go.Figure:
     return fig
 
 
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 def metric_card(label: str, value: str, sub: str, color: str):
     st.markdown(
         f"""
@@ -155,17 +164,47 @@ def metric_card(label: str, value: str, sub: str, color: str):
     )
 
 
+<<<<<<< HEAD
+=======
+def _parse_incorrect_answers(raw_value: str) -> list[str]:
+    if not isinstance(raw_value, str) or not raw_value.strip():
+        return []
+
+    try:
+        parsed = ast.literal_eval(raw_value)
+        if isinstance(parsed, list):
+            return [str(item).strip() for item in parsed if str(item).strip()]
+    except (SyntaxError, ValueError):
+        pass
+
+    return [chunk.strip().strip("'\"") for chunk in raw_value.split(",") if chunk.strip()]
+
+
+def _score_candidate_answer(analyzer: HallucinationAnalyzer, question: str, answer: str) -> float | None:
+    ground_truth = analyzer.external_verifier.find_ground_truth(question)
+    if ground_truth is None:
+        return None
+    similarity = analyzer.external_verifier.compute_similarity(answer, ground_truth["text"])
+    return 1.0 - similarity
+
+
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 def render(cfg: dict):
     st.markdown(
         """
     <div class='hero'>
         <h1>Evaluation</h1>
+<<<<<<< HEAD
         <p>Run the full model pipeline on sampled questions and measure ROC / classification performance.</p>
+=======
+        <p>Measure how well the risk score separates factual answers from incorrect ones.</p>
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
     </div>
     """,
         unsafe_allow_html=True,
     )
 
+<<<<<<< HEAD
     with st.expander("How this works", expanded=False):
         st.markdown(
             """
@@ -187,6 +226,18 @@ def render(cfg: dict):
 | **Recall** | TP / (TP + FN) |
 | **F1** | 2 · P · R / (P + R) |
 | **AUC** | Area under ROC (0.5 = random, 1.0 = perfect) |
+=======
+    with st.expander("Formula Reference", expanded=False):
+        st.markdown(
+            """
+| Metric | Formula |
+|---|---|
+| **Accuracy** | (TP + TN) / (TP + TN + FP + FN) |
+| **Precision** | TP / (TP + FP) |
+| **Recall** | TP / (TP + FN) |
+| **F1 Score** | 2 * Precision * Recall / (Precision + Recall) |
+| **AUC** | Area under the ROC curve (0.5 = random, 1.0 = perfect) |
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 """
         )
 
@@ -194,6 +245,7 @@ def render(cfg: dict):
     c1, c2 = st.columns(2)
     with c1:
         roc_samples = st.slider(
+<<<<<<< HEAD
             "Questions to evaluate",
             3, 20, 5, 1,
             key="roc_samples",
@@ -235,6 +287,25 @@ def render(cfg: dict):
                 "more reliable when GPT-2 responses are noisy. "
                 "'EigenScore component' uses the normalised eigen risk alone."
             ),
+=======
+            "QA sample pairs",
+            5,
+            60,
+            20,
+            5,
+            key="roc_samples",
+            help="Total question-answer pairs evaluated across correct and incorrect answers.",
+        )
+    with c2:
+        risk_threshold = st.slider(
+            "Risk threshold",
+            0.1,
+            0.9,
+            0.5,
+            0.05,
+            key="risk_thresh",
+            help="Risk score above this threshold is classified as hallucination.",
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
         )
     run_btn = st.button("Run Batch Evaluation", use_container_width=True, key="run_roc")
     st.markdown("</div>", unsafe_allow_html=True)
@@ -245,24 +316,32 @@ def render(cfg: dict):
         <div class='card' style='text-align:center; padding:2.5rem;'>
             <h3 style='color:#0369a1;'>Waiting for Evaluation</h3>
             <p style='color:rgba(0,0,0,0.6);'>
+<<<<<<< HEAD
                 Click <strong>Run Batch Evaluation</strong> to run the model on sampled
                 questions and compute ROC / classification metrics.
             </p>
             <p style='color:rgba(0,0,0,0.45); font-size:0.85rem;'>
                 ⚠️ Each question requires a full model forward pass. 5 questions ≈ 1–3 min.
+=======
+                Click <strong>Run Batch Evaluation</strong> to score labelled answers from the validation CSV.
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
             </p>
         </div>""",
             unsafe_allow_html=True,
         )
         return
 
+<<<<<<< HEAD
     # ── Load CSV ────────────────────────────────────────────────────────────
+=======
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
     try:
         df = pd.read_csv("generation_validation.csv")
     except FileNotFoundError:
         st.error("generation_validation.csv not found in the working directory.")
         return
 
+<<<<<<< HEAD
     df = df.dropna(subset=["question", "best_answer"])
     df = df[df["best_answer"].astype(str).str.strip() != ""]
     sample_count = min(roc_samples, len(df))
@@ -389,6 +468,71 @@ def render(cfg: dict):
         f"Evaluated **{len(y_true)}** questions — "
         f"**{n_correct}** labelled Correct, **{n_halluc}** labelled Hallucinated."
     )
+=======
+    df = df.dropna(subset=["question", "best_answer", "incorrect_answers"])
+    df = df[df["incorrect_answers"].astype(str).str.strip() != ""]
+    sample_count = min(max(1, roc_samples // 2), len(df))
+
+    sampled = df.sample(n=sample_count, random_state=42)
+    labeled_answers = []
+    for _, row in sampled.iterrows():
+        wrong_answers = _parse_incorrect_answers(row["incorrect_answers"])
+        if not wrong_answers:
+            continue
+        labeled_answers.append((row["question"], row["best_answer"], 0))
+        labeled_answers.append((row["question"], wrong_answers[0], 1))
+
+    if len(labeled_answers) < 4:
+        st.warning("Not enough valid labelled answers were found in the CSV.")
+        return
+
+    with st.spinner("Scoring labelled answers against the detected ground truth."):
+        try:
+            analyzer = load_analyzer(cfg["model_name"], cfg["semantic_threshold"])
+        except Exception as exc:
+            st.error(f"Model loading failed: {exc}")
+            return
+
+        y_true, y_scores, details = [], [], []
+        progress = st.progress(0.0)
+        status = st.empty()
+
+        for index, (question, answer, label) in enumerate(labeled_answers):
+            status.text(f"Sample {index + 1}/{len(labeled_answers)}: {question[:70]}...")
+            score = _score_candidate_answer(analyzer, question, answer)
+            if score is None:
+                progress.progress((index + 1) / len(labeled_answers))
+                continue
+
+            y_true.append(label)
+            y_scores.append(score)
+            predicted = 1 if score > risk_threshold else 0
+            details.append(
+                {
+                    "Question": question[:60] + ("..." if len(question) > 60 else ""),
+                    "Candidate Answer": answer[:70] + ("..." if len(answer) > 70 else ""),
+                    "Label": "Hallucinated" if label == 1 else "Correct",
+                    "Risk Score": round(score, 4),
+                    "Predicted": "Hallucinated" if predicted else "Correct",
+                    "Correct?": "Yes" if predicted == label else "No",
+                }
+            )
+            progress.progress((index + 1) / len(labeled_answers))
+
+        status.empty()
+        progress.empty()
+
+    if len(set(y_true)) < 2:
+        st.warning("Not enough label variety remained after filtering.")
+        return
+
+    y_pred = [1 if score > risk_threshold else 0 for score in y_scores]
+    auc_val = auc(*roc_curve(y_true, y_scores)[:2])
+    acc = accuracy_score(y_true, y_pred)
+    prec = precision_score(y_true, y_pred, zero_division=0)
+    rec = recall_score(y_true, y_pred, zero_division=0)
+    f1 = f1_score(y_true, y_pred, zero_division=0)
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 
     st.subheader("Performance Metrics")
     k1, k2, k3, k4, k5 = st.columns(5)
@@ -401,7 +545,11 @@ def render(cfg: dict):
     with k4:
         metric_card("Recall", f"{rec:.2%}", "TP / (TP+FN)", "#f59e0b")
     with k5:
+<<<<<<< HEAD
         metric_card("F1 Score", f"{f1:.2%}", "Harmonic mean P·R", "#ef4444")
+=======
+        metric_card("F1 Score", f"{f1:.2%}", "Harmonic mean of precision and recall", "#ef4444")
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 
     col_roc, col_cm = st.columns([3, 2])
     with col_roc:
@@ -409,6 +557,7 @@ def render(cfg: dict):
     with col_cm:
         st.plotly_chart(plot_confusion(y_true, y_pred), use_container_width=True)
 
+<<<<<<< HEAD
     st.plotly_chart(plot_risk_distribution(details), use_container_width=True)
 
     with st.expander("Per-sample results", expanded=False):
@@ -419,4 +568,11 @@ def render(cfg: dict):
         "is run for each question. final_risk is used as the ROC classifier score. "
         "The true label is determined by comparing the model's own generated response "
         f"to the CSV ground truth (label threshold = {label_threshold:.2f})."
+=======
+    with st.expander("Per-sample results"):
+        st.dataframe(pd.DataFrame(details), use_container_width=True)
+
+    st.caption(
+        "This evaluation now scores the labelled answers in the CSV directly against the detected ground truth, instead of ignoring the supplied answer text."
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
     )

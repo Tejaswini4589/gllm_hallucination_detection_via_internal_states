@@ -8,5 +8,13 @@ streamlit>=1.28.0
 scikit-learn>=1.3.0
 plotly>=5.14.0
 datasets>=3.0.0
+<<<<<<< HEAD
 sentence-transformers>=2.2.2
+=======
+<<<<<<< HEAD
+sentence-transformers>=2.2.2
+=======
+wikipedia>=1.4.0
+>>>>>>> f3146a8e61329e337ddc1d31aca94655c7edf5fc
+>>>>>>> 348eac36cba6edb8b73207e4b53b5a0fa24ab3c1
 pandas>=1.5.0
