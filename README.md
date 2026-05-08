@@ -1,3 +1,13 @@
+---
+title: HalluciScan
+emoji: 🔍
+colorFrom: blue
+colorTo: green
+sdk: streamlit
+sdk_version: "1.28.0"
+app_file: app.py
+pinned: false
+---
 # Hybrid LLM Hallucination Detection System
 
 A complete Python project for detecting hallucinations in LLM-generated text using GPT-2 and TransformerLens. The system combines internal model analysis (entropy, stability, attention grounding) with external factual verification.
