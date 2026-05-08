@@ -32,16 +32,16 @@ def get_all_qa_pairs(split: str = "validation") -> List[Dict]:
     except Exception as e:
         print(f"Error loading TruthfulQA: {e}")
 
-    # 2. SQuAD
-    try:
-        print("Loading SQuAD dataset...")
-        squad = load_dataset("squad", split=split)
-        for row in squad:
-            ans = row["answers"]["text"][0] if row["answers"]["text"] else ""
-            if ans:
-                pairs.append({"question": row["question"], "best_answer": ans, "source": "SQuAD"})
-    except Exception as e:
-        print(f"Error loading SQuAD: {e}")
+    # # 2. SQuAD
+    # try:
+    #     print("Loading SQuAD dataset...")
+    #     squad = load_dataset("squad", split=split)
+    #     for row in squad:
+    #         ans = row["answers"]["text"][0] if row["answers"]["text"] else ""
+    #         if ans:
+    #             pairs.append({"question": row["question"], "best_answer": ans, "source": "SQuAD"})
+    # except Exception as e:
+    #     print(f"Error loading SQuAD: {e}")
 
     # # 3. NQ Open
     # try:
