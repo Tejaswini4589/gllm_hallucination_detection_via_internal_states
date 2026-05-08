@@ -43,39 +43,39 @@ def get_all_qa_pairs(split: str = "validation") -> List[Dict]:
     except Exception as e:
         print(f"Error loading SQuAD: {e}")
 
-    # 3. NQ Open
-    try:
-        print("Loading NQ Open dataset...")
-        nq = load_dataset("nq_open", split=split)
-        for row in nq:
-            ans = row["answer"][0] if row["answer"] else ""
-            if ans:
-                pairs.append({"question": row["question"], "best_answer": ans, "source": "NQ"})
-    except Exception as e:
-        print(f"Error loading NQ: {e}")
+    # # 3. NQ Open
+    # try:
+    #     print("Loading NQ Open dataset...")
+    #     nq = load_dataset("nq_open", split=split)
+    #     for row in nq:
+    #         ans = row["answer"][0] if row["answer"] else ""
+    #         if ans:
+    #             pairs.append({"question": row["question"], "best_answer": ans, "source": "NQ"})
+    # except Exception as e:
+    #     print(f"Error loading NQ: {e}")
 
-    # 4. Trivia QA
-    try:
-        print("Loading Trivia QA dataset...")
-        trivia = load_dataset("trivia_qa", "rc.nocontext", split=split)
-        for row in trivia:
-            ans = row["answer"]["value"]
-            if ans:
-                pairs.append({"question": row["question"], "best_answer": ans, "source": "TriviaQA"})
-    except Exception as e:
-        print(f"Error loading TriviaQA: {e}")
+    # # 4. Trivia QA
+    # try:
+    #     print("Loading Trivia QA dataset...")
+    #     trivia = load_dataset("trivia_qa", "rc.nocontext", split=split)
+    #     for row in trivia:
+    #         ans = row["answer"]["value"]
+    #         if ans:
+    #             pairs.append({"question": row["question"], "best_answer": ans, "source": "TriviaQA"})
+    # except Exception as e:
+    #     print(f"Error loading TriviaQA: {e}")
 
-    # 5. CoQA
-    try:
-        print("Loading CoQA dataset...")
-        coqa = load_dataset("coqa", split=split)
-        for row in coqa:
-            questions = row["questions"]
-            answers = row["answers"]["input_text"]
-            for q, a in zip(questions, answers):
-                pairs.append({"question": q, "best_answer": a, "source": "CoQA"})
-    except Exception as e:
-        print(f"Error loading CoQA: {e}")
+    # # 5. CoQA
+    # try:
+    #     print("Loading CoQA dataset...")
+    #     coqa = load_dataset("coqa", split=split)
+    #     for row in coqa:
+    #         questions = row["questions"]
+    #         answers = row["answers"]["input_text"]
+    #         for q, a in zip(questions, answers):
+    #             pairs.append({"question": q, "best_answer": a, "source": "CoQA"})
+    # except Exception as e:
+    #     print(f"Error loading CoQA: {e}")
 
     return pairs
 
