@@ -204,8 +204,8 @@ model_name = st.sidebar.selectbox(
 )
 
 semantic_threshold = st.sidebar.slider("Semantic Match Threshold", 0.50, 1.00, 0.80, 0.05)
-num_responses = st.sidebar.slider("Number of Responses", 1, 10, 5)
-max_length = st.sidebar.slider("Max Generation Length", 10, 100, 50)
+num_responses = st.sidebar.slider("Number of Responses", 1, 10, 2)
+max_length = st.sidebar.slider("Max Generation Length", 10, 100, 20)
 temperature = st.sidebar.slider("Temperature", 0.1, 2.0, 0.8, 0.1)
 
 st.sidebar.subheader("Risk Weights")
